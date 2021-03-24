@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from 'react';
+import './style.css';
 
-function App() {
+import BoxContainer from './components/BoxContainer';
+
+const App = () => {
+  const [showInputBox, setShowInputBox] = useState(0);
+
+  const todoBoxRef = useRef();
+  const todoBoxProps = {
+    id: 1,
+    name: 'Todo',
+    boxRef: todoBoxRef,
+    showInputBox,
+    setShowInputBox,
+  };
+
+  const onProgressBoxRef = useRef();
+  const onProgressBoxProps = {
+    id: 2,
+    name: 'On Progress',
+    boxRef: onProgressBoxRef,
+    showInputBox,
+    setShowInputBox,
+  };
+
+  const doneBoxRef = useRef();
+  const doneBoxProps = {
+    id: 3,
+    name: 'Done',
+    boxRef: doneBoxRef,
+    showInputBox,
+    setShowInputBox,
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="appTitle-container">
+        <div className="appTitle-text">Progress Board</div>
+      </div>
+      <div className="appContent-container">
+        <BoxContainer {...todoBoxProps} />
+        <BoxContainer {...onProgressBoxProps} />
+        <BoxContainer {...doneBoxProps} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

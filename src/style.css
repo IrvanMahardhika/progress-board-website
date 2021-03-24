@@ -1,0 +1,59 @@
+.App {
+  position: relative;
+}
+
+.appTitle-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.appTitle-text {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.appContent-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.box-container {
+  display: inline-block;
+  min-width: 250px;
+  padding: 20px 15px 5px;
+  border: 1px solid #000000;
+  text-align: center;
+  background-color: #fff;
+}
+
+.title-container {
+  width: 100%;
+  margin: 0 0 20px 0;
+  text-align: left;
+}
+
+.title-text {
+  display: inline-block;
+  width: 155px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.inputBox-container {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+
+.inputBox {
+  width: 150px;
+}
+
+.input-button {
+  padding: 5px 10px;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
