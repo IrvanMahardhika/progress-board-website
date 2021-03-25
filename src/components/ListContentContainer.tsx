@@ -240,6 +240,75 @@ const ListContentContainer: React.FC<Props> = ({
     }
   };
 
+  const checkIfStringContainsUrl = () => {
+    let children;
+    children = title;
+    const geturl = new RegExp(
+      '(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))',
+      'g',
+    );
+    let urlInTheStringArray = title.match(geturl);
+    if (urlInTheStringArray) {
+      // remove blank space in front of the url
+      const urlInTheStringArrayLength = urlInTheStringArray.length;
+      const newUrlInTheStringArray = [];
+      for (let i = 0; i < urlInTheStringArrayLength; i++) {
+        if (urlInTheStringArray[i].charAt(0) === ' ') {
+          newUrlInTheStringArray.push(urlInTheStringArray[i].slice(1));
+        } else {
+          newUrlInTheStringArray.push(urlInTheStringArray[i]);
+        }
+      }
+
+      // add "|||||" in front and behind the url for slice separator
+      let stringToBeSplit = title;
+      let urlFromPrevIteration: any;
+      for (let i = 0; i < urlInTheStringArrayLength; i++) {
+        const url = newUrlInTheStringArray[i];
+        // this if mechanism is to solve problem by duplicate url
+        if (urlFromPrevIteration === url) {
+          continue;
+        }
+        stringToBeSplit = stringToBeSplit.replace(
+          new RegExp(url, 'g'),
+          `|||||${url}|||||`,
+        );
+        urlFromPrevIteration = url;
+      }
+
+      // set new children for the html
+      const newChildren: any[] = [];
+      const stringSplittedArray = stringToBeSplit.split('|||||');
+      const stringSplittedArrayLength = stringSplittedArray.length;
+      for (let i = 0; i < stringSplittedArrayLength; i++) {
+        if (newUrlInTheStringArray.includes(stringSplittedArray[i])) {
+          // if the element is one of the url
+          // display it with anchor tag
+          newChildren.push(
+            <a key={i.toString()} href={stringSplittedArray[i]}>
+              {stringSplittedArray[i]}
+            </a>,
+          );
+        } else {
+          newChildren.push(stringSplittedArray[i]);
+        }
+      }
+      children = newChildren;
+    }
+    return (
+      <div
+        className="listContent-title-text"
+        onClick={() => {
+          setEnableEditBoardName(0);
+          setShowInputBox(0);
+          setEnableEditList({ id, index });
+        }}
+      >
+        {children}
+      </div>
+    );
+  };
+
   return (
     <div className="listContent" style={styles} onMouseDown={handleMouseDown}>
       {enableEditList.id === id && enableEditList.index === index ? (
@@ -259,18 +328,7 @@ const ListContentContainer: React.FC<Props> = ({
           />
         </form>
       ) : (
-        <div className="listContent-title">
-          <div
-            className="listContent-title-text"
-            onClick={() => {
-              setEnableEditBoardName(0);
-              setShowInputBox(0);
-              setEnableEditList({ id, index });
-            }}
-          >
-            {title}
-          </div>
-        </div>
+        <div className="listContent-title">{checkIfStringContainsUrl()}</div>
       )}
 
       <div>
