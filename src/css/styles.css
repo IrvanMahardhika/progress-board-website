@@ -41,6 +41,11 @@
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+  cursor: text;
+}
+
+.appContent .box-container .title .inputBox-boardName {
+  width: 100px;
 }
 
 .appContent .box-container .input {
@@ -78,5 +83,10 @@
   display: inline-block;
   width: 90%;
   text-align: left;
+}
+
+.appContent .box-container .listContent-title-text {
+  display: inline-block;
+  cursor: text;
 }
 /*# sourceMappingURL=styles.css.map */

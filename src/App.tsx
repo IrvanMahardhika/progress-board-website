@@ -4,33 +4,44 @@ import './css/styles.css';
 import BoxContainer from './components/BoxContainer';
 
 const App = () => {
+  const [enableEditBoardName, setEnableEditBoardName] = useState(0);
   const [showInputBox, setShowInputBox] = useState(0);
+  const [enableEditList, setEnableEditList] = useState({ id: 0, index: null });
 
   const todoBoxProps = {
     id: 1,
-    name: 'Todo',
+    enableEditBoardName,
+    setEnableEditBoardName,
     showInputBox,
     setShowInputBox,
+    enableEditList,
+    setEnableEditList,
   };
 
   const onProgressBoxProps = {
     id: 2,
-    name: 'On Progress',
+    enableEditBoardName,
+    setEnableEditBoardName,
     showInputBox,
     setShowInputBox,
+    enableEditList,
+    setEnableEditList,
   };
 
   const doneBoxProps = {
     id: 3,
-    name: 'Done',
+    enableEditBoardName,
+    setEnableEditBoardName,
     showInputBox,
     setShowInputBox,
+    enableEditList,
+    setEnableEditList,
   };
 
   return (
     <div className="App">
       <div className="appTitle">
-        <div className="text">Progress Board</div>
+        <div className="appTitle-text">Progress Board</div>
       </div>
       <div className="appContent">
         <BoxContainer {...todoBoxProps} />

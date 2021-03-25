@@ -10,29 +10,29 @@ import ListContentContainer from './ListContentContainer';
 
 type Props = {
   id: number;
-  name: string;
+  enableEditBoardName: number;
+  setEnableEditBoardName: any;
   showInputBox: number;
   setShowInputBox: any;
+  enableEditList: { id: number; index: any };
+  setEnableEditList: any;
 };
 
 const position = { x: 0, y: 0 };
 
 const BoxContainer: React.FC<Props> = ({
   id,
-  name,
+  enableEditBoardName,
+  setEnableEditBoardName,
   showInputBox,
   setShowInputBox,
+  enableEditList,
+  setEnableEditList,
 }) => {
   const context = useContext(AppContext);
-  const {
-    todoList,
-    setTodoList,
-    onProgressList,
-    setOnProgressList,
-    doneList,
-    setDoneList,
-  } = context;
+  const { todo, setTodo, onProgress, setOnProgress, done, setDone } = context;
 
+  const [newBoardName, setNewBoardName] = useState('');
   const [newEntry, setNewEntry] = useState('');
 
   const [state, setState] = useState({
@@ -100,30 +100,132 @@ const BoxContainer: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isDragging, handleMouseMove, handleMouseUp]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const closeEditBoardName = () => {
+    setEnableEditBoardName(0);
+  };
+
+  const closeEditBoardNameWithESCbutton = (
+    e: any,
+    closeEditBoardNameFunction: any,
+    removeEventListener: any,
+  ) => {
+    const keys: any = {
+      27: () => {
+        e.preventDefault();
+        closeEditBoardNameFunction();
+        removeEventListener();
+      },
+    };
+    if (keys[e.keyCode]) {
+      keys[e.keyCode]();
+    }
+  };
+
+  const closeEditBoarNameWithESCbuttonHandler = useCallback(
+    (e) => {
+      closeEditBoardNameWithESCbutton(e, closeEditBoardName, () =>
+        window.removeEventListener(
+          'keyup',
+          closeEditBoarNameWithESCbuttonHandler,
+          false,
+        ),
+      );
+    },
+    [closeEditBoardName],
+  );
+
+  useEffect(() => {
+    window.addEventListener(
+      'keyup',
+      closeEditBoarNameWithESCbuttonHandler,
+      false,
+    );
+    return () => {
+      window.removeEventListener(
+        'keyup',
+        closeEditBoarNameWithESCbuttonHandler,
+        false,
+      );
+    };
+  }, [closeEditBoarNameWithESCbuttonHandler]);
+
+  const editBoardName = () => {
+    const inputBoxElement = document.getElementById(
+      `inputBox-boardName-${id}`,
+    ) as HTMLInputElement;
+    if (newBoardName !== '') {
+      switch (id) {
+        case 1:
+          const newTodo = {
+            ...todo,
+            name: newBoardName,
+          };
+          setTodo(newTodo);
+          setNewBoardName('');
+          inputBoxElement.value = '';
+          setEnableEditBoardName(0);
+          break;
+        case 2:
+          const newOnProgress = {
+            ...onProgress,
+            name: newBoardName,
+          };
+          setOnProgress(newOnProgress);
+          setNewBoardName('');
+          inputBoxElement.value = '';
+          setEnableEditBoardName(0);
+          break;
+        case 3:
+          const newDone = {
+            ...done,
+            name: newBoardName,
+          };
+          setDone(newDone);
+          setNewBoardName('');
+          inputBoxElement.value = '';
+          setEnableEditBoardName(0);
+          break;
+        default:
+          break;
+      }
+    } else {
+      setEnableEditBoardName(0);
+    }
+  };
+
   const addNewEntryIntoList = () => {
     const inputBoxElement = document.getElementById(
       `inputBox-${id}`,
     ) as HTMLInputElement;
     if (newEntry !== '') {
-      let newList;
       switch (id) {
         case 1:
-          newList = [...todoList, newEntry];
-          setTodoList(newList);
+          const newTodo = {
+            ...todo,
+            list: [...todo.list, newEntry],
+          };
+          setTodo(newTodo);
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();
           break;
         case 2:
-          newList = [...onProgressList, newEntry];
-          setOnProgressList(newList);
+          const newOnProgress = {
+            ...onProgress,
+            list: [...onProgress.list, newEntry],
+          };
+          setOnProgress(newOnProgress);
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();
           break;
         case 3:
-          newList = [...doneList, newEntry];
-          setDoneList(newList);
+          const newDone = {
+            ...done,
+            list: [...done.list, newEntry],
+          };
+          setDone(newDone);
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();
@@ -141,63 +243,111 @@ const BoxContainer: React.FC<Props> = ({
     window.removeEventListener('mouseup', handleMouseUp);
   };
 
-  const renderList = () => {
-    switch (id) {
-      case 1:
-        if (todoList.length > 0) {
-          return todoList.map((todo, index) => {
-            const props = {
-              id,
-              index,
-              title: todo,
-              removeParentComponentDragging,
-            };
-            return <ListContentContainer key={index.toString()} {...props} />;
-          });
-        } else {
+  const rendername = () => {
+    if (enableEditBoardName === id) {
+      switch (id) {
+        case 1:
+          return (
+            <input
+              id={`inputBox-boardName-${id}`}
+              autoFocus
+              className="inputBox-boardName"
+              placeholder={todo.name}
+              value={newBoardName}
+              onChange={({ target }) => setNewBoardName(target.value)}
+            />
+          );
+        case 2:
+          return (
+            <input
+              id={`inputBox-boardName-${id}`}
+              autoFocus
+              className="inputBox-boardName"
+              placeholder={onProgress.name}
+              value={newBoardName}
+              onChange={({ target }) => setNewBoardName(target.value)}
+            />
+          );
+        case 3:
+          return (
+            <input
+              id={`inputBox-boardName-${id}`}
+              autoFocus
+              className="inputBox-boardName"
+              placeholder={done.name}
+              value={newBoardName}
+              onChange={({ target }) => setNewBoardName(target.value)}
+            />
+          );
+        default:
           return null;
-        }
-      case 2:
-        if (onProgressList.length > 0) {
-          return onProgressList.map((onProgress, index) => {
-            const props = {
-              id,
-              index,
-              title: onProgress,
-              removeParentComponentDragging,
-            };
-            return <ListContentContainer key={index.toString()} {...props} />;
-          });
-        } else {
+      }
+    } else {
+      switch (id) {
+        case 1:
+          return todo.name;
+        case 2:
+          return onProgress.name;
+        case 3:
+          return done.name;
+        default:
           return null;
-        }
-      case 3:
-        if (doneList.length > 0) {
-          return doneList.map((done, index) => {
-            const props = {
-              id,
-              index,
-              title: done,
-              removeParentComponentDragging,
-            };
-            return <ListContentContainer key={index.toString()} {...props} />;
-          });
-        } else {
-          return null;
-        }
-      default:
-        return null;
+      }
     }
   };
 
   const renderListQty = () => {
     switch (id) {
       case 1:
-        return todoList.length;
+        return todo.list.length;
       case 2:
-        return onProgressList.length;
+        return onProgress.list.length;
       case 3:
-        return doneList.length;
+        return done.list.length;
+      default:
+        return null;
+    }
+  };
+
+  const renderList = () => {
+    let props = {
+      id,
+      index: 0,
+      title: '',
+      removeParentComponentDragging,
+      enableEditList,
+      setEnableEditList,
+      setEnableEditBoardName,
+      setShowInputBox,
+    };
+    switch (id) {
+      case 1:
+        if (todo.list.length > 0) {
+          return todo.list.map((todo, index) => {
+            props = { ...props, index, title: todo };
+            return <ListContentContainer key={index.toString()} {...props} />;
+          });
+        } else {
+          return null;
+        }
+      case 2:
+        if (onProgress.list.length > 0) {
+          return onProgress.list.map((onProgress, index) => {
+            props = { ...props, index, title: onProgress };
+            return <ListContentContainer key={index.toString()} {...props} />;
+          });
+        } else {
+          return null;
+        }
+      case 3:
+        if (done.list.length > 0) {
+          return done.list.map((done, index) => {
+            props = { ...props, index, title: done };
+            return <ListContentContainer key={index.toString()} {...props} />;
+          });
+        } else {
+          return null;
+        }
       default:
         return null;
     }
@@ -206,10 +356,28 @@ const BoxContainer: React.FC<Props> = ({
   return (
     <div className="box-container" style={styles} onMouseDown={handleMouseDown}>
       <div className="title">
-        <div className="title-text">
-          {name} ({renderListQty()})
-        </div>
-        <button className="show-input" onClick={() => setShowInputBox(id)}>
+        <form
+          className="title-text"
+          onClick={() => {
+            setEnableEditList({ id: 0, index: null });
+            setShowInputBox(0);
+            setEnableEditBoardName(id);
+          }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            editBoardName();
+          }}
+        >
+          {rendername()} ({renderListQty()})
+        </form>
+        <button
+          className="show-input"
+          onClick={() => {
+            setEnableEditBoardName(0);
+            setEnableEditList({ id: 0, index: null });
+            setShowInputBox(id);
+          }}
+        >
           +
         </button>
       </div>

@@ -36,6 +36,11 @@ $mainGray: #e6e6e6;
         font-size: 20px;
         font-weight: bold;
         text-align: center;
+        cursor: text;
+      }
+
+      .inputBox-boardName {
+        width: 100px;
       }
     }
 
@@ -68,6 +73,11 @@ $mainGray: #e6e6e6;
         display: inline-block;
         width: 90%;
         text-align: left;
+
+        &-text {
+          display: inline-block;
+          cursor: text;
+        }
       }
     }
   }
