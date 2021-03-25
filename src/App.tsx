@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.css';
+import './css/styles.css';
 
 import BoxContainer from './components/BoxContainer';
 
@@ -29,10 +29,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="appTitle-container">
-        <div className="appTitle-text">Progress Board</div>
+      <div className="appTitle">
+        <div className="text">Progress Board</div>
       </div>
-      <div className="appContent-container">
+      <div className="appContent">
         <BoxContainer {...todoBoxProps} />
         <BoxContainer {...onProgressBoxProps} />
         <BoxContainer {...doneBoxProps} />

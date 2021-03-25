@@ -1,0 +1,85 @@
+.App {
+  position: relative;
+}
+
+.appTitle {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.appTitle .text {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.appContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100%;
+}
+
+.box-container {
+  display: inline-block;
+  min-width: 250px;
+  max-width: 400px;
+  padding: 20px 15px 10px;
+  border: 1px solid #000000;
+  text-align: center;
+  background-color: #fff;
+}
+
+.box-container .title {
+  margin: 0 0 20px 0;
+}
+
+.box-container .title .text {
+  display: inline-block;
+  width: 155px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.box-container .input {
+  margin: 0 0 10px 0;
+}
+
+.box-container .input .inputBox {
+  width: 150px;
+}
+
+.box-container button.add,
+.box-container button.cancel,
+.box-container button.delete {
+  padding: 5px 10px;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+
+.box-container .listContent-Container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 10px 0 0 0;
+  padding: 5px 10px;
+  border: 1px solid #000000;
+  background-color: #e6e6e6;
+}
+
+.box-container .listContent-Container .text {
+  display: inline-block;
+  width: 90%;
+  text-align: left;
+}
+/*# sourceMappingURL=styles.css.map */
