@@ -100,12 +100,12 @@ const BoxContainer: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isDragging, handleMouseMove, handleMouseUp]);
 
-  const addList = () => {
+  const addNewEntryIntoList = () => {
+    const inputBoxElement = document.getElementById(
+      `inputBox-${id}`,
+    ) as HTMLInputElement;
     if (newEntry !== '') {
       let newList;
-      const inputBoxElement = document.getElementById(
-        `inputBox-${id}`,
-      ) as HTMLInputElement;
       switch (id) {
         case 1:
           newList = [...todoList, newEntry];
@@ -131,19 +131,8 @@ const BoxContainer: React.FC<Props> = ({
         default:
           break;
       }
-    }
-  };
-
-  const renderListQty = () => {
-    switch (id) {
-      case 1:
-        return todoList.length;
-      case 2:
-        return onProgressList.length;
-      case 3:
-        return doneList.length;
-      default:
-        return null;
+    } else {
+      inputBoxElement.focus();
     }
   };
 
@@ -201,13 +190,26 @@ const BoxContainer: React.FC<Props> = ({
     }
   };
 
+  const renderListQty = () => {
+    switch (id) {
+      case 1:
+        return todoList.length;
+      case 2:
+        return onProgressList.length;
+      case 3:
+        return doneList.length;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="box-container" style={styles} onMouseDown={handleMouseDown}>
       <div className="title">
-        <div className="text">
+        <div className="title-text">
           {name} ({renderListQty()})
         </div>
-        <button className="input-button" onClick={() => setShowInputBox(id)}>
+        <button className="show-input" onClick={() => setShowInputBox(id)}>
           +
         </button>
       </div>
@@ -220,10 +222,12 @@ const BoxContainer: React.FC<Props> = ({
             value={newEntry}
             onChange={({ target }) => setNewEntry(target.value)}
           />
-          <button className="add" onClick={addList}>
+          <button className="add" onClick={addNewEntryIntoList}>
             v
           </button>
-          <button className="cancel">x</button>
+          <button className="cancel" onClick={() => setShowInputBox(0)}>
+            x
+          </button>
         </div>
       )}
       {renderList()}

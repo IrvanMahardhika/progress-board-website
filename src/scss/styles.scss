@@ -1,12 +1,12 @@
-.App {
-  position: relative;
-}
+$mainWhite: #fff;
+$mainBlack: #000000;
+$mainGray: #e6e6e6;
 
 .appTitle {
   margin: 20px 0;
   text-align: center;
 
-  .text {
+  &-text {
     font-size: 32px;
     font-weight: bold;
   }
@@ -17,57 +17,58 @@
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-}
 
-.box-container {
-  display: inline-block;
-  min-width: 250px;
-  max-width: 400px;
-  padding: 20px 15px 10px;
-  border: 1px solid #000000;
-  text-align: center;
-  background-color: #fff;
+  .box-container {
+    display: inline-block;
+    min-width: 250px;
+    max-width: 400px;
+    padding: 20px 15px 10px;
+    border: 1px solid $mainBlack;
+    text-align: center;
+    background-color: $mainWhite;
 
-  .title {
-    margin: 0 0 20px 0;
+    .title {
+      margin: 0 0 20px 0;
 
-    .text {
-      display: inline-block;
-      width: 155px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
+      &-text {
+        display: inline-block;
+        width: 155px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
     }
-  }
 
-  .input {
-    margin: 0 0 10px 0;
+    .input {
+      margin: 0 0 10px 0;
 
-    .inputBox {
-      width: 150px;
+      .inputBox {
+        width: 150px;
+      }
     }
-  }
 
-  button.add,
-  button.cancel,
-  button.delete {
-    padding: 5px 10px;
-    margin: 0 0 0 10px;
-    cursor: pointer;
-  }
+    button.show-input,
+    button.add,
+    button.cancel,
+    button.delete {
+      padding: 5px 10px;
+      margin: 0 0 0 10px;
+      cursor: pointer;
+    }
 
-  .listContent-Container {
-    display: flex;
-    flex-direction: row;
-    margin: 10px 0 0 0;
-    padding: 5px 10px;
-    border: 1px solid #000000;
-    background-color: #e6e6e6;
+    .listContent {
+      display: flex;
+      flex-direction: row;
+      margin: 10px 0 0 0;
+      padding: 5px 10px;
+      border: 1px solid $mainBlack;
+      background-color: $mainGray;
 
-    .text {
-      display: inline-block;
-      width: 90%;
-      text-align: left;
+      &-title {
+        display: inline-block;
+        width: 90%;
+        text-align: left;
+      }
     }
   }
 }

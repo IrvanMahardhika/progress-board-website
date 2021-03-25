@@ -125,12 +125,8 @@ const ListContentContainer: React.FC<Props> = ({
   };
 
   return (
-    <div
-      className="listContent-Container"
-      style={styles}
-      onMouseDown={handleMouseDown}
-    >
-      <div className="text">{title}</div>
+    <div className="listContent" style={styles} onMouseDown={handleMouseDown}>
+      <div className="listContent-title">{title}</div>
       <div>
         <button
           className="delete"
