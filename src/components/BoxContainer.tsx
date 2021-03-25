@@ -10,7 +10,6 @@ import { AppContext } from '../utils/AppState';
 type Props = {
   id: number;
   name: string;
-  boxRef: any;
   showInputBox: number;
   setShowInputBox: any;
 };
@@ -20,12 +19,21 @@ const position = { x: 0, y: 0 };
 const BoxContainer: React.FC<Props> = ({
   id,
   name,
-  boxRef,
   showInputBox,
   setShowInputBox,
 }) => {
   const context = useContext(AppContext);
-  const { todoList, onProgressList, doneList } = context;
+  const {
+    todoList,
+    setTodoList,
+    onProgressList,
+    setOnProgressList,
+    doneList,
+    setDoneList,
+  } = context;
+
+  const [newEntry, setNewEntry] = useState('');
+
   const [state, setState] = useState({
     isDragging: false,
     origin: position,
@@ -91,6 +99,64 @@ const BoxContainer: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isDragging, handleMouseMove, handleMouseUp]);
 
+  const addList = () => {
+    if (newEntry !== '') {
+      let newList;
+      const inputElement = document.getElementById(
+        `inputBox-${id}`,
+      ) as HTMLInputElement;
+      switch (id) {
+        case 1:
+          newList = [...todoList, newEntry];
+          setTodoList(newList);
+          setNewEntry('');
+          inputElement.value = '';
+          inputElement.focus();
+          break;
+        case 2:
+          newList = [...onProgressList, newEntry];
+          setOnProgressList(newList);
+          setNewEntry('');
+          inputElement.value = '';
+          inputElement.focus();
+          break;
+        case 3:
+          newList = [...doneList, newEntry];
+          setDoneList(newList);
+          setNewEntry('');
+          inputElement.value = '';
+          inputElement.focus();
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const removeThisEntryFromList = (index: number) => {
+    let dummyList;
+    let newList;
+    switch (id) {
+      case 1:
+        dummyList = todoList;
+        newList = [...dummyList.slice(0, index), ...dummyList.slice(index + 1)];
+        setTodoList(newList);
+        break;
+      case 2:
+        dummyList = onProgressList;
+        newList = [...dummyList.slice(0, index), ...dummyList.slice(index + 1)];
+        setTodoList(newList);
+        break;
+      case 3:
+        dummyList = doneList;
+        newList = [...dummyList.slice(0, index), ...dummyList.slice(index + 1)];
+        setTodoList(newList);
+        break;
+      default:
+        break;
+    }
+  };
+
   const renderListQty = () => {
     switch (id) {
       case 1:
@@ -108,24 +174,60 @@ const BoxContainer: React.FC<Props> = ({
     switch (id) {
       case 1:
         if (todoList.length > 0) {
-          return todoList.map((todo) => {
-            return <div>{todo}</div>;
+          return todoList.map((todo, index) => {
+            return (
+              <div className="listContent-Container">
+                <div className="listContent-text">{todo}</div>
+                <div>
+                  <button
+                    className="input-button"
+                    onClick={() => removeThisEntryFromList(index)}
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+            );
           });
         } else {
           return null;
         }
       case 2:
         if (onProgressList.length > 0) {
-          return onProgressList.map((onProgress) => {
-            return <div>{onProgress}</div>;
+          return onProgressList.map((onProgress, index) => {
+            return (
+              <div className="listContent-Container">
+                <div className="listContent-text">{onProgress}</div>
+                <div>
+                  <button
+                    className="input-button"
+                    onClick={() => removeThisEntryFromList(index)}
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+            );
           });
         } else {
           return null;
         }
       case 3:
         if (doneList.length > 0) {
-          return doneList.map((done) => {
-            return <div>{done}</div>;
+          return doneList.map((done, index) => {
+            return (
+              <div className="listContent-Container">
+                <div className="listContent-text">{done}</div>
+                <div>
+                  <button
+                    className="input-button"
+                    onClick={() => removeThisEntryFromList(index)}
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+            );
           });
         } else {
           return null;
@@ -136,12 +238,7 @@ const BoxContainer: React.FC<Props> = ({
   };
 
   return (
-    <div
-      className="box-container"
-      ref={boxRef}
-      style={styles}
-      onMouseDown={handleMouseDown}
-    >
+    <div className="box-container" style={styles} onMouseDown={handleMouseDown}>
       <div className="title-container">
         <div className="title-text">
           {name} ({renderListQty()})
@@ -151,9 +248,15 @@ const BoxContainer: React.FC<Props> = ({
         </button>
       </div>
       {showInputBox === id && (
-        <div className="inputBox-container">
-          <input className="inputBox" />
-          <button className="input-button">v</button>
+        <div id={`inputBox-${id}`} className="inputBox-container">
+          <input
+            className="inputBox"
+            value={newEntry}
+            onChange={({ target }) => setNewEntry(target.value)}
+          />
+          <button className="input-button" onClick={addList}>
+            v
+          </button>
           <button className="input-button">x</button>
         </div>
       )}

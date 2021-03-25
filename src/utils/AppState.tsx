@@ -2,8 +2,8 @@ import React, { createContext, useReducer } from 'react';
 
 export const initialValues = {
   returnValue: true,
-  todoList: [1, 2, 3],
-  onProgressList: ['a', 'b', 'c', 'd'],
+  todoList: [],
+  onProgressList: [],
   doneList: [],
   setTodoList: (payload: any) => {},
   setOnProgressList: (payload: any) => {},
@@ -14,9 +14,9 @@ export const AppContext = createContext(initialValues);
 
 type State = {
   returnValue: boolean;
-  todoList: any;
-  onProgressList: any;
-  doneList: any;
+  todoList: string[];
+  onProgressList: string[];
+  doneList: string[];
 };
 
 type Action = {

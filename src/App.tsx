@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 
 import BoxContainer from './components/BoxContainer';
@@ -6,29 +6,23 @@ import BoxContainer from './components/BoxContainer';
 const App = () => {
   const [showInputBox, setShowInputBox] = useState(0);
 
-  const todoBoxRef = useRef();
   const todoBoxProps = {
     id: 1,
     name: 'Todo',
-    boxRef: todoBoxRef,
     showInputBox,
     setShowInputBox,
   };
 
-  const onProgressBoxRef = useRef();
   const onProgressBoxProps = {
     id: 2,
     name: 'On Progress',
-    boxRef: onProgressBoxRef,
     showInputBox,
     setShowInputBox,
   };
 
-  const doneBoxRef = useRef();
   const doneBoxProps = {
     id: 3,
     name: 'Done',
-    boxRef: doneBoxRef,
     showInputBox,
     setShowInputBox,
   };
