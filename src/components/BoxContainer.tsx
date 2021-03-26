@@ -162,6 +162,7 @@ const BoxContainer: React.FC<Props> = ({
             name: newBoardName,
           };
           setTodo(newTodo);
+          localStorage.setItem('todo', JSON.stringify(newTodo));
           setNewBoardName('');
           inputBoxElement.value = '';
           setEnableEditBoardName(0);
@@ -172,6 +173,7 @@ const BoxContainer: React.FC<Props> = ({
             name: newBoardName,
           };
           setOnProgress(newOnProgress);
+          localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
           setNewBoardName('');
           inputBoxElement.value = '';
           setEnableEditBoardName(0);
@@ -182,6 +184,7 @@ const BoxContainer: React.FC<Props> = ({
             name: newBoardName,
           };
           setDone(newDone);
+          localStorage.setItem('done', JSON.stringify(newDone));
           setNewBoardName('');
           inputBoxElement.value = '';
           setEnableEditBoardName(0);
@@ -206,6 +209,7 @@ const BoxContainer: React.FC<Props> = ({
             list: [...todo.list, newEntry],
           };
           setTodo(newTodo);
+          localStorage.setItem('todo', JSON.stringify(newTodo));
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();
@@ -216,6 +220,7 @@ const BoxContainer: React.FC<Props> = ({
             list: [...onProgress.list, newEntry],
           };
           setOnProgress(newOnProgress);
+          localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();
@@ -226,6 +231,7 @@ const BoxContainer: React.FC<Props> = ({
             list: [...done.list, newEntry],
           };
           setDone(newDone);
+          localStorage.setItem('done', JSON.stringify(newDone));
           setNewEntry('');
           inputBoxElement.value = '';
           inputBoxElement.focus();

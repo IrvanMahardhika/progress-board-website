@@ -215,6 +215,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...onProgress.list, todo.list[index]],
             };
             setOnProgress(newOnProgress);
+            localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
             break;
           case isContentDraggedOver_doneBox():
             removeThisEntryFromList(index);
@@ -223,6 +224,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...done.list, todo.list[index]],
             };
             setDone(newDone);
+            localStorage.setItem('done', JSON.stringify(newDone));
             break;
           default:
             break;
@@ -241,6 +243,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...done.list, onProgress.list[index]],
             };
             setDone(newDone);
+            localStorage.setItem('done', JSON.stringify(newDone));
             break;
           case isContentDraggedOver_todoBox():
             removeThisEntryFromList(index);
@@ -249,6 +252,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...todo.list, onProgress.list[index]],
             };
             setTodo(newTodo);
+            localStorage.setItem('todo', JSON.stringify(newTodo));
             break;
           default:
             break;
@@ -267,6 +271,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...onProgress.list, done.list[index]],
             };
             setOnProgress(newOnProgress);
+            localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
             break;
           case isContentDraggedOver_todoBox():
             removeThisEntryFromList(index);
@@ -275,6 +280,7 @@ const ListContentContainer: React.FC<Props> = ({
               list: [...todo.list, done.list[index]],
             };
             setTodo(newTodo);
+            localStorage.setItem('todo', JSON.stringify(newTodo));
             break;
           default:
             break;
@@ -385,6 +391,7 @@ const ListContentContainer: React.FC<Props> = ({
           list: [...dummyList.slice(0, index), ...dummyList.slice(index + 1)],
         };
         setTodo(newTodo);
+        localStorage.setItem('todo', JSON.stringify(newTodo));
         break;
       case 2:
         dummyList = onProgress.list;
@@ -393,6 +400,7 @@ const ListContentContainer: React.FC<Props> = ({
           list: [...dummyList.slice(0, index), ...dummyList.slice(index + 1)],
         };
         setOnProgress(newOnProgress);
+        localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
         break;
       case 3:
         dummyList = done.list;
@@ -401,6 +409,7 @@ const ListContentContainer: React.FC<Props> = ({
           list: [...dummyList.slice(0, index), ...dummyList.slice(index + 1)],
         };
         setDone(newDone);
+        localStorage.setItem('done', JSON.stringify(newDone));
         break;
       default:
         break;
@@ -425,6 +434,7 @@ const ListContentContainer: React.FC<Props> = ({
             ],
           };
           setTodo(newTodo);
+          localStorage.setItem('todo', JSON.stringify(newTodo));
           inputBoxElement.value = '';
           setNewTitle('');
           setEnableEditList({ id: 0, index: null });
@@ -440,6 +450,7 @@ const ListContentContainer: React.FC<Props> = ({
             ],
           };
           setOnProgress(newOnProgress);
+          localStorage.setItem('onProgress', JSON.stringify(newOnProgress));
           inputBoxElement.value = '';
           setNewTitle('');
           setEnableEditList({ id: 0, index: null });
@@ -455,6 +466,7 @@ const ListContentContainer: React.FC<Props> = ({
             ],
           };
           setDone(newDone);
+          localStorage.setItem('done', JSON.stringify(newDone));
           inputBoxElement.value = '';
           setNewTitle('');
           setEnableEditList({ id: 0, index: null });

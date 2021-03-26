@@ -14,7 +14,7 @@ const ProgressBar: React.FC = () => {
     const totalItem = todoItem + onProgressItem + doneItem;
     const progress = (doneItem / totalItem) * 100;
     setCompletedBarWidth(`${progress}%`);
-  }, [todo, done]);
+  }, [todo, onProgress, done]);
 
   return (
     <div id="myProgress">
