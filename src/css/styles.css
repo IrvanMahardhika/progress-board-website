@@ -21,7 +21,12 @@
   width: 100%;
 }
 
+.appContent .box-container-isDraggedOver {
+  background-color: red !important;
+}
+
 .appContent .box-container {
+  position: relative;
   display: inline-block;
   min-width: 250px;
   max-width: 400px;
@@ -68,6 +73,7 @@
 }
 
 .appContent .box-container .listContent {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

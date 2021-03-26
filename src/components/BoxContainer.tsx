@@ -354,7 +354,12 @@ const BoxContainer: React.FC<Props> = ({
   };
 
   return (
-    <div className="box-container" style={styles} onMouseDown={handleMouseDown}>
+    <div
+      id={`box-${id}`}
+      className="box-container"
+      style={styles}
+      onMouseDown={handleMouseDown}
+    >
       <div className="title">
         <form
           className="title-text"

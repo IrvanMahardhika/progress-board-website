@@ -51,6 +51,166 @@ const ListContentContainer: React.FC<Props> = ({
     [state.isDragging, state.translation],
   );
 
+  const isContentDraggedOverOn_todoBox = () => {
+    const thisContent = document.getElementById(
+      `content-${id}-${index}`,
+    ) as HTMLDivElement;
+    const { top, bottom, left, right } = thisContent.getBoundingClientRect();
+    const todoBox = document.getElementById('box-1') as HTMLDivElement;
+    const {
+      top: todoBoxTop,
+      bottom: todoBoxBottom,
+      left: todoBoxLeft,
+      right: todoBoxRight,
+    } = todoBox.getBoundingClientRect();
+    if (
+      ((top > todoBoxTop && bottom < todoBoxBottom) ||
+        (top <= todoBoxTop && bottom < todoBoxBottom && bottom > todoBoxTop) ||
+        (bottom >= todoBoxBottom && top < todoBoxBottom && top > todoBoxTop)) &&
+      ((left > todoBoxLeft && right < todoBoxRight) ||
+        (left <= todoBoxLeft && right < todoBoxRight && right > todoBoxLeft) ||
+        (right >= todoBoxRight && left < todoBoxRight && left > todoBoxLeft))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isContentDraggedOverOn_onProgressBox = () => {
+    const thisContent = document.getElementById(
+      `content-${id}-${index}`,
+    ) as HTMLDivElement;
+    const { top, bottom, left, right } = thisContent.getBoundingClientRect();
+    const onProgressBox = document.getElementById('box-2') as HTMLDivElement;
+    const {
+      top: onProgressBoxTop,
+      bottom: onProgressBoxBottom,
+      left: onProgressBoxLeft,
+      right: onProgressBoxRight,
+    } = onProgressBox.getBoundingClientRect();
+    if (
+      ((top > onProgressBoxTop && bottom < onProgressBoxBottom) ||
+        (top <= onProgressBoxTop &&
+          bottom < onProgressBoxBottom &&
+          bottom > onProgressBoxTop) ||
+        (bottom >= onProgressBoxBottom &&
+          top < onProgressBoxBottom &&
+          top > onProgressBoxTop)) &&
+      ((left > onProgressBoxLeft && right < onProgressBoxRight) ||
+        (left <= onProgressBoxLeft &&
+          right < onProgressBoxRight &&
+          right > onProgressBoxLeft) ||
+        (right >= onProgressBoxRight &&
+          left < onProgressBoxRight &&
+          left > onProgressBoxLeft))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isContentDraggedOverOn_doneBox = () => {
+    const thisContent = document.getElementById(
+      `content-${id}-${index}`,
+    ) as HTMLDivElement;
+    const { top, bottom, left, right } = thisContent.getBoundingClientRect();
+    const doneBox = document.getElementById('box-3') as HTMLDivElement;
+    const {
+      top: doneBoxTop,
+      bottom: doneBoxBottom,
+      left: doneBoxLeft,
+      right: doneBoxRight,
+    } = doneBox.getBoundingClientRect();
+    if (
+      ((top > doneBoxTop && bottom < doneBoxBottom) ||
+        (top <= doneBoxTop && bottom < doneBoxBottom && bottom > doneBoxTop) ||
+        (bottom >= doneBoxBottom && top < doneBoxBottom && top > doneBoxTop)) &&
+      ((left > doneBoxLeft && right < doneBoxRight) ||
+        (left <= doneBoxLeft && right < doneBoxRight && right > doneBoxLeft) ||
+        (right >= doneBoxRight && left < doneBoxRight && left > doneBoxLeft))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const highlightTheDraggedOverBox = () => {
+    const todoBox = document.getElementById('box-1') as HTMLDivElement;
+    const onProgressBox = document.getElementById('box-2') as HTMLDivElement;
+    const doneBox = document.getElementById('box-3') as HTMLDivElement;
+    switch (id) {
+      case 1:
+        // compare with onProgressBox
+        if (isContentDraggedOverOn_onProgressBox()) {
+          onProgressBox.classList.add('box-container-isDraggedOver');
+          doneBox.classList.remove('box-container-isDraggedOver');
+        } else {
+          onProgressBox.classList.remove('box-container-isDraggedOver');
+          // compare with doneBox, after compare with onProgressBox
+          if (isContentDraggedOverOn_doneBox()) {
+            doneBox.classList.add('box-container-isDraggedOver');
+          } else {
+            doneBox.classList.remove('box-container-isDraggedOver');
+          }
+        }
+        break;
+      case 2:
+        // compare with doneBox
+        if (isContentDraggedOverOn_doneBox()) {
+          doneBox.classList.add('box-container-isDraggedOver');
+          todoBox.classList.remove('box-container-isDraggedOver');
+        } else {
+          doneBox.classList.remove('box-container-isDraggedOver');
+          // compare with todoBox, after compare with doneBox
+          if (isContentDraggedOverOn_todoBox()) {
+            todoBox.classList.add('box-container-isDraggedOver');
+          } else {
+            todoBox.classList.remove('box-container-isDraggedOver');
+          }
+        }
+        break;
+      case 3:
+        // compare with onProgressBox
+        if (isContentDraggedOverOn_onProgressBox()) {
+          onProgressBox.classList.add('box-container-isDraggedOver');
+          todoBox.classList.remove('box-container-isDraggedOver');
+        } else {
+          onProgressBox.classList.remove('box-container-isDraggedOver');
+          // compare with todoBox, after compare with onProgressBox
+          if (isContentDraggedOverOn_todoBox()) {
+            todoBox.classList.add('box-container-isDraggedOver');
+          } else {
+            todoBox.classList.remove('box-container-isDraggedOver');
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const checkAllBoxPositionOnDropping = () => {
+    const todoBox = document.getElementById('box-1') as HTMLDivElement;
+    todoBox.classList.remove('box-container-isDraggedOver');
+    const onProgressBox = document.getElementById('box-2') as HTMLDivElement;
+    onProgressBox.classList.remove('box-container-isDraggedOver');
+    const doneBox = document.getElementById('box-3') as HTMLDivElement;
+    doneBox.classList.remove('box-container-isDraggedOver');
+    switch (id) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleMouseDown = useCallback(({ clientX, clientY }) => {
     removeParentComponentDragging();
     setState((state) => ({
@@ -69,6 +229,7 @@ const ListContentContainer: React.FC<Props> = ({
         y: clientY - state.origin.y + state.lastTranslation.y,
       };
       setState((state) => ({ ...state, translation }));
+      highlightTheDraggedOverBox();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [state.origin],
@@ -79,6 +240,8 @@ const ListContentContainer: React.FC<Props> = ({
       ...state,
       isDragging: false,
     }));
+    checkAllBoxPositionOnDropping();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -310,7 +473,12 @@ const ListContentContainer: React.FC<Props> = ({
   };
 
   return (
-    <div className="listContent" style={styles} onMouseDown={handleMouseDown}>
+    <div
+      id={`content-${id}-${index}`}
+      className="listContent"
+      style={styles}
+      onMouseDown={handleMouseDown}
+    >
       {enableEditList.id === id && enableEditList.index === index ? (
         <form
           className="listContent-title"
