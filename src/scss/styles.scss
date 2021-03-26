@@ -27,6 +27,7 @@ $mainGray: #e6e6e6;
     display: inline-block;
     min-width: 250px;
     max-width: 400px;
+    min-height: 300px;
     padding: 20px 15px 10px;
     border: 1px solid $mainBlack;
     text-align: center;
@@ -42,7 +43,6 @@ $mainGray: #e6e6e6;
         font-size: 20px;
         font-weight: bold;
         text-align: center;
-        cursor: text;
       }
 
       .inputBox-boardName {
@@ -71,6 +71,7 @@ $mainGray: #e6e6e6;
       position: relative;
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       margin: 10px 0 0 0;
       padding: 5px 10px;
       border: 1px solid $mainBlack;
@@ -78,13 +79,16 @@ $mainGray: #e6e6e6;
 
       &-title {
         display: inline-block;
-        width: 90%;
+        min-width: 65%;
         text-align: left;
 
         &-text {
           display: inline-block;
-          cursor: text;
         }
+      }
+
+      &-buttons {
+        display: inline-block;
       }
     }
   }

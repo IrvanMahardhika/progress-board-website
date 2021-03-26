@@ -522,18 +522,7 @@ const ListContentContainer: React.FC<Props> = ({
       }
       children = newChildren;
     }
-    return (
-      <div
-        className="listContent-title-text"
-        onClick={() => {
-          setEnableEditBoardName(0);
-          setShowInputBox(0);
-          setEnableEditList({ id, index });
-        }}
-      >
-        {children}
-      </div>
-    );
+    return <div className="listContent-title-text">{children}</div>;
   };
 
   return (
@@ -554,7 +543,7 @@ const ListContentContainer: React.FC<Props> = ({
           <input
             id={`inputBox-boardName-${id}-${index}`}
             autoFocus
-            placeholder={title}
+            placeholder={`hit "enter" to save`}
             value={newTitle}
             onChange={({ target }) => setNewTitle(target.value)}
           />
@@ -563,7 +552,21 @@ const ListContentContainer: React.FC<Props> = ({
         <div className="listContent-title">{checkIfStringContainsUrl()}</div>
       )}
 
-      <div>
+      <div className="listContent-buttons">
+        <button
+          className="show-input"
+          onClick={() => {
+            if (enableEditList.id === id && enableEditList.index === index) {
+              setEnableEditList({ id: 0, index: null });
+            } else {
+              setEnableEditBoardName(0);
+              setShowInputBox(0);
+              setEnableEditList({ id, index });
+            }
+          }}
+        >
+          /
+        </button>
         <button
           className="delete"
           onClick={() => removeThisEntryFromList(index)}

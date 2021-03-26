@@ -252,7 +252,7 @@ const BoxContainer: React.FC<Props> = ({
               id={`inputBox-boardName-${id}`}
               autoFocus
               className="inputBox-boardName"
-              placeholder={todo.name}
+              placeholder={`hit "enter" to save`}
               value={newBoardName}
               onChange={({ target }) => setNewBoardName(target.value)}
             />
@@ -263,7 +263,7 @@ const BoxContainer: React.FC<Props> = ({
               id={`inputBox-boardName-${id}`}
               autoFocus
               className="inputBox-boardName"
-              placeholder={onProgress.name}
+              placeholder={`hit "enter" to save`}
               value={newBoardName}
               onChange={({ target }) => setNewBoardName(target.value)}
             />
@@ -274,7 +274,7 @@ const BoxContainer: React.FC<Props> = ({
               id={`inputBox-boardName-${id}`}
               autoFocus
               className="inputBox-boardName"
-              placeholder={done.name}
+              placeholder={`hit "enter" to save`}
               value={newBoardName}
               onChange={({ target }) => setNewBoardName(target.value)}
             />
@@ -363,11 +363,6 @@ const BoxContainer: React.FC<Props> = ({
       <div className="title">
         <form
           className="title-text"
-          onClick={() => {
-            setEnableEditList({ id: 0, index: null });
-            setShowInputBox(0);
-            setEnableEditBoardName(id);
-          }}
           onSubmit={(e) => {
             e.preventDefault();
             editBoardName();
@@ -375,6 +370,20 @@ const BoxContainer: React.FC<Props> = ({
         >
           {rendername()} ({renderListQty()})
         </form>
+        <button
+          className="show-input"
+          onClick={() => {
+            if (enableEditBoardName === id) {
+              setEnableEditBoardName(0);
+            } else {
+              setEnableEditList({ id: 0, index: null });
+              setShowInputBox(0);
+              setEnableEditBoardName(id);
+            }
+          }}
+        >
+          /
+        </button>
         <button
           className="show-input"
           onClick={() => {
