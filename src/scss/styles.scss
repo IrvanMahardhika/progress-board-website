@@ -19,7 +19,13 @@ $mainGray: #e6e6e6;
   width: 100%;
 
   .box-container-isDraggedOver {
-    background-color: red !important;
+    background-image: linear-gradient(
+      to top,
+      #32b280,
+      #32b285,
+      #32b39c,
+      #32b3ac
+    );
   }
 
   .box-container {
@@ -90,6 +96,34 @@ $mainGray: #e6e6e6;
       &-buttons {
         display: inline-block;
       }
+    }
+  }
+}
+
+#myProgress {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+
+  #barContainer {
+    width: 80%;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid $mainGray;
+    background-color: $mainGray;
+    border-radius: 5px;
+
+    #completedBar {
+      height: 100%;
+      background-image: linear-gradient(
+        to top,
+        #32b280,
+        #32b285,
+        #32b39c,
+        #32b3ac
+      );
+      background-color: #4caf50;
     }
   }
 }

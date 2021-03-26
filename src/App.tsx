@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './css/styles.css';
 
 import BoxContainer from './components/BoxContainer';
+import ProgressBar from './components/ProgressBar';
 
 const App = () => {
   const [enableEditBoardName, setEnableEditBoardName] = useState(0);
@@ -48,6 +49,7 @@ const App = () => {
         <BoxContainer {...onProgressBoxProps} />
         <BoxContainer {...doneBoxProps} />
       </div>
+      <ProgressBar />
     </div>
   );
 };
